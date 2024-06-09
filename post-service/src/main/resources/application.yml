@@ -1,0 +1,13 @@
+server:
+  port: 6789
+
+#logging:
+#  config: classpath:audit-logback-spring.xml
+#  level:
+#    root: INFO
+#  file:
+#    config: classpath:file-logback-spring.xml
+#    path: C:/Users/user/Downloads/demo/demo/FileLogApp/gateway-client.log
+#    max-history: 365
+#    max-file-size: 100MB
+#    pattern: '%d{yyyy-MM-dd HH:mm:sss.SSS} [%thread] - [%-5level] [%logger{50} :%line] - %msg%n'

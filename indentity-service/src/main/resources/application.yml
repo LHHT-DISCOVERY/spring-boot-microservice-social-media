@@ -1,0 +1,45 @@
+server:
+  port: 8080
+jwt:
+  signKey: "OB0RdAPKk205HmONdsjs/FV8oLzmu9i+ObfyWB/CvazOJbpXAtXuUszLnxQTRd4P"
+  valid-duration: 3600 #in second
+  refreshable-duration: 360000 #in second
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/test?useUnicode=true&characterEncoding=utf8&useSSL=false
+    username: root
+    password: 123456
+    hikari:
+      data-source-properties:
+        cachePrepStmts: true
+        prepStmtCacheSqlLimit: 2048
+        useServerPrepStmts: true
+  jpa:
+    hibernate:
+      ddl-auto: update
+      use-new-id-generator-mapping: false
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    database: MYSQL
+    show-sql: true
+    properties:
+      hibernate.cache.use_second_level_cache: false
+      hibernate.cache.use_query_cache: false
+      hibernate.generate_statistics: true
+      hibernate.cache.region.factory_class: org.hibernate.cache.ehcache.SingletonEhCacheRegionFactory
+    open-in-view: false
+  config:
+    active:
+      on-profile: dev
+
+logging:
+  config: classpath:audit-logback-spring.xml
+#  level:
+#    root: INFO
+#  file:
+#    config: classpath:file-logback-spring.xml
+#    path: C:/Users/user/Downloads/demo/demo/FileLogApp/gateway-client.log
+#    max-history: 365
+#    max-file-size: 100MB
+#    pattern: '%d{yyyy-MM-dd HH:mm:sss.SSS} [%thread] - [%-5level] [%logger{50} :%line] - %msg%n'

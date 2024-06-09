@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration scan="false" scanPreiod="60 seconds" debug="false">
+    <property name="LOG_HOME" value="C:/Users/user/Downloads/New folder/microservices-social-media/indentity-service/FileLogApp"/>
+    <property name="appName" value="gateway-client"/>
+    <appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
+        <layout>
+            <pattern>%d{yyyy-MM-dd HH:mm:sss.SSS} [%thread] %-5level %logger{50} - %msg%n</pattern>
+        </layout>
+    </appender>
+
+    <appender name="appLogAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_HOME}/${appName}.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_HOME}/${appName}-%d{yyyy-MM-dd}-%i.log</fileNamePattern>
+            <MaxHistory>365</MaxHistory>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>100MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <pattern>%d{yyyy-MM-dd HH:mm:sss.SSS} [%thread] - [%-5level] [%logger{50} :%line] - %msg%n</pattern>
+        </layout>
+    </appender>
+
+    <springProfile name="dev">
+        <root level="info">
+            <appender-ref ref="stdout"/>
+            <appender-ref ref="appLogAppender"/>
+        </root>
+    </springProfile>
+
+</configuration>

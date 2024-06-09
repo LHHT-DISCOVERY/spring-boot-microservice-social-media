@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration scan="true" debug="true">
+    <springProperty name="dbDriverClass" source="spring.datasource.driver-class-name" />
+    <springProperty name="dbUrl" source="spring.datasource.url"/>
+    <springProperty name="dbUsername" source="spring.datasource.username"/>
+    <springProperty name="dbPassword" source="spring.datasource.password"/>
+
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <charset>utf-8</charset>
+            <Pattern>[%p] %d %c - %m%n</Pattern>
+        </encoder>
+    </appender>
+
+    <appender name="AUDIT_EVENT_DB" class="com.example.identity.common.event_tracking.AuditEventDBAppender">
+        <filter class="ch.qos.logback.core.filter.EvaluatorFilter">
+            <evaluator class="ch.qos.logback.classic.boolex.OnMarkerEvaluator">
+                <marker>AUDIT_EVENT</marker>
+            </evaluator>
+            <onMismatch>DENY</onMismatch>
+            <onMismatch>ACCEPT</onMismatch>
+        </filter>
+        <connectionSource class="ch.qos.logback.core.db.DriverManagerConnectionSource">
+            <driverClass>${dbDriverClass}</driverClass>
+            <url>${dbUrl}</url>
+            <user>${dbUsername}</user>
+            <password>${dbPassword}</password>
+        </connectionSource>
+    </appender>
+
+    <logger name="com.example.identity" level="INFO"/>
+    <logger name="javax.activation" level="WARN"/>
+    <logger name = "javax.xml.bind" level="WARN"/>
+    <logger name = "ch.qos.logback" level="WARN"/>
+    <logger name = "com.codahale.metrics" level="WARN"/>
+    <logger name = "com.ryantenney" level="WARN"/>
+    <logger name = "com.sun.xml.internal.bind" level="WARN"/>
+    <logger name = "com.zaxxer" level="WARN"/>
+    <logger name = "io.undertow" level="WARN"/>
+    <logger name = "net.sf.ehcache" level="WARN"/>
+    <logger name = "io.apache" level="WARN"/>
+    <logger name = "io.apache.catalina.startup.DigesterFactory" level="OFF"/>
+    <logger name = "org.hibernate" level="WARN"/>
+    <logger name = "org.hibernate.validator" level="WARN"/>
+    <logger name = "org.hibernate.ejb.HibernatePersistence" level="OFF"/>
+    <logger name = "org.springframework" level="WARN"/>
+    <logger name = "org.springframework.web" level="WARN"/>
+    <logger name = "org.springframework.security" level="WARN"/>
+    <logger name = "org.springframework.cache" level="WARN"/>
+    <logger name = "org.springframework" level="WARN"/>
+
+
+    <contextListener class="ch.qos.logback.classic.jul.LevelChangePropagator">
+        <resetJUL>true</resetJUL>
+    </contextListener>
+
+    <root level="INFO">
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="AUDIT_EVENT_DB"/>
+    </root>
+
+</configuration>
