@@ -4,6 +4,8 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Optional;
 
+import com.example.identity.mapper.ProfileMapper;
+import com.example.identity.repository.http_client.ProfileClient;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 import org.slf4j.Logger;
@@ -46,6 +48,10 @@ public class UserService implements IServiceCRUD<User, UserCreateRequest, UserRe
 
     RoleRepository roleRepository;
 
+    ProfileClient profileClient;
+
+    ProfileMapper profileMapper;
+
     @Override
     @PreAuthorize("hasRole('ADMIN')")
     // spring security default mapping with format "ROLE_"; this EX: ROLE_ADMIN // see author line 46-49 UserController
@@ -84,6 +90,9 @@ public class UserService implements IServiceCRUD<User, UserCreateRequest, UserRe
                     ErrorCode.USER_EXIST); // instead of check user exist as above , we using try catch exception, give
             // this check task for dbms
         }
+        var profileRequest = profileMapper.toProfileCreateRequest(usercreateRequest);
+        profileRequest.setUserId(user.getId());
+        profileClient.createProfile(profileRequest);
         return userMapper.toUserResponse(user);
     }
 

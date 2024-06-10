@@ -30,5 +30,8 @@ public class UserCreateRequest {
     @DobConstraint(min = 16, message = "INVALID_DOB") // step2 Validator
     LocalDate dob;
 
+    String city;
+    String gender;
+
     List<String> roles;
 }

@@ -7,7 +7,7 @@ import lombok.Getter;
 
 @Getter
 public enum ErrorCode {
-    USER_EXIST(1001, "user exist", HttpStatus.NOT_FOUND),
+    USER_EXIST(1001, "username exist", HttpStatus.NOT_FOUND),
     INVALID_DOB(1010, "your age must be at least {min}", HttpStatus.BAD_REQUEST),
     PERMISSION_NOT_FOUND(1009, "Permission not found", HttpStatus.NOT_FOUND),
     INVALID_KEY(1002, "Invalid message key", HttpStatus.BAD_REQUEST),

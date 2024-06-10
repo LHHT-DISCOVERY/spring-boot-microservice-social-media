@@ -1,5 +1,7 @@
 server:
   port: 8080
+  servlet:
+    context-path: /identity
 jwt:
   signKey: "OB0RdAPKk205HmONdsjs/FV8oLzmu9i+ObfyWB/CvazOJbpXAtXuUszLnxQTRd4P"
   valid-duration: 3600 #in second
@@ -32,7 +34,9 @@ spring:
   config:
     active:
       on-profile: dev
-
+app:
+  service:
+    profile: http://localhost:4567/profile
 logging:
   config: classpath:audit-logback-spring.xml
 #  level:
