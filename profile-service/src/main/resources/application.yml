@@ -1,5 +1,15 @@
 server:
   port: 4567
+  servlet:
+    context-path: /profile
+spring:
+  neo4j:
+    uri: bolt://localhost:7687
+    authentication:
+      username: neo4j
+      password: 12345678
+
+
 
 #logging:
 #  config: classpath:audit-logback-spring.xml
