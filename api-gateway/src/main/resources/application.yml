@@ -1,0 +1,26 @@
+server:
+  port: 8888
+
+app:
+  api-prefix: /api
+
+spring:
+  application:
+    name: gateway
+  cloud:
+    gateway:
+      routes: # routing to service
+        - id: identity_service
+          uri: http://localhost:8080
+          predicates:
+            - Path=${app.api-prefix}/identity/**
+          filters:
+            - StripPrefix=1 # remove "/api" in path (this mean, get path "/identity/**" )
+        - id: profile_service
+          uri: http://localhost:4567
+          predicates:
+            # postman request with url : "/api/profile/users/.../..." (only export api with the prefix that we want to client using)
+            # using "," to map more url api as below
+            - Path=${app.api-prefix}/profile/users/** #,${app.api-prefix}/profile/..../**
+          filters:
+            - StripPrefix=1 # remove "/api" in path (this mean, get path "/profile/**" )
