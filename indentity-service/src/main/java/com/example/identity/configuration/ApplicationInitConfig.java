@@ -81,9 +81,6 @@ public class ApplicationInitConfig {
             if (userRepository.findByUsername("admin").isEmpty()) {
                 User user = User.builder()
                         .username("admin")
-                        .firstName("admin")
-                        .lastName("admin")
-                        .dob(LocalDate.now())
                         .password(passwordEncoder.encode("admin"))
                         .roles(roles)
                         .build();

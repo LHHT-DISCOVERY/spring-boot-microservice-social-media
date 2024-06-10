@@ -10,6 +10,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 @FeignClient(name = "profile-service", url = "${app.service.profile}") // to 2 microservices communication by http (OpenFeign)
 public interface ProfileClient {
-    @PostMapping(value = "/create", produces = MediaType.APPLICATION_JSON_VALUE) // using post method , and json value in request body
+    @PostMapping(value = "/internal/create", produces = MediaType.APPLICATION_JSON_VALUE) // using post method , and json value in request body
     UserProfileResponse createProfile(@RequestBody ProfileCreateRequest request);
 }
