@@ -19,6 +19,10 @@
         <mapstruct.version>1.5.5.Final</mapstruct.version>
         <lombok-mapstruct-binding.version>0.2.0</lombok-mapstruct-binding.version>
         <spotless.version>2.43.0</spotless.version>
+        <spring-cloud.version>2023.0.1
+        </spring-cloud.version>
+        <!-- https://spring.io/projects/spring-cloud to check version spring boot map with spring cloud-->
+        <!--        and add dependency-->
     </properties>
     <dependencies>
 
@@ -159,16 +163,30 @@
             <scope>test</scope>
         </dependency>
 
+        <!--  http client to communicate among microservice      -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
+        </dependency>
+
     </dependencies>
 
 
-    <!-- integration test -->
     <dependencyManagement>
         <dependencies>
+            <!-- integration test -->
             <dependency>
                 <groupId>org.testcontainers</groupId>
                 <artifactId>testcontainers-bom</artifactId>
                 <version>1.19.7</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <!--            spring cloud -->
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
