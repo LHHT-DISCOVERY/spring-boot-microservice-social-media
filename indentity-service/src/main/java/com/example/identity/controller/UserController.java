@@ -35,7 +35,7 @@ public class UserController {
 
     UserMapper userMapper;
 
-    @PostMapping("/public/create")
+    @PostMapping("/registrations")
     ApiResponse<UserResponse> createUser(@Valid @RequestBody UserCreateRequest usercreateRequest) {
         ApiResponse<UserResponse> userApiResponse = new ApiResponse<>();
         userApiResponse.setResult(userService.createEntity(usercreateRequest));

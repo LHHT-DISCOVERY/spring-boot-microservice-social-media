@@ -12,7 +12,7 @@ import reactor.core.publisher.Mono;
 @Repository
 // call server identity
 public interface IdentityClient {
-    @PostExchange(url = "/v1/public/auth/introspect", contentType = MediaType.APPLICATION_JSON_VALUE)
+    @PostExchange(url = "/v1/auth/introspect", contentType = MediaType.APPLICATION_JSON_VALUE)
         // using post exchange , this is http of spring, not of OpenFeign
     Mono<ApiResponse<IntrospectResponse>> introspect(@RequestBody IntrospectTokenRequest request); // call not using OpenFeign
 }
