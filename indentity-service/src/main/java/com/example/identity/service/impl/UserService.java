@@ -1,11 +1,20 @@
 package com.example.identity.service.impl;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Optional;
-
+import com.example.identity.dto.request.UserCreateRequest;
+import com.example.identity.dto.request.UserUpdateRequest;
+import com.example.identity.dto.response.UserResponse;
+import com.example.identity.entity.User;
+import com.example.identity.exception.AppException;
+import com.example.identity.exception.ErrorCode;
 import com.example.identity.mapper.ProfileMapper;
+import com.example.identity.mapper.UserMapper;
+import com.example.identity.repository.RoleRepository;
+import com.example.identity.repository.UserRepository;
 import com.example.identity.repository.http_client.ProfileClient;
+import com.example.identity.service.IServiceCRUD;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 import org.slf4j.Logger;
@@ -16,21 +25,12 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
-import com.example.identity.dto.request.UserCreateRequest;
-import com.example.identity.dto.request.UserUpdateRequest;
-import com.example.identity.dto.response.UserResponse;
-import com.example.identity.entity.User;
-import com.example.identity.exception.AppException;
-import com.example.identity.exception.ErrorCode;
-import com.example.identity.mapper.UserMapper;
-import com.example.identity.repository.RoleRepository;
-import com.example.identity.repository.UserRepository;
-import com.example.identity.service.IServiceCRUD;
-
-import lombok.AccessLevel;
-import lombok.RequiredArgsConstructor;
-import lombok.experimental.FieldDefaults;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Optional;
 
 @Service
 // DI bằng constructor
@@ -87,8 +87,9 @@ public class UserService implements IServiceCRUD<User, UserCreateRequest, UserRe
             user = userRepository.save(user);
         } catch (DataIntegrityViolationException e) {
             throw new AppException(
-                    ErrorCode.USER_EXIST); // instead of check user exist as above , we using try catch exception, give
-            // this check task for dbms
+                    ErrorCode.USER_EXIST);
+            // instead of check user exist by jpa (existsByUsername() method) as above , we using try catch exception,
+            // give  this check task for dbms
         }
         var profileRequest = profileMapper.toProfileCreateRequest(usercreateRequest);
         profileRequest.setUserId(user.getId());

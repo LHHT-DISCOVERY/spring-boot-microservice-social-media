@@ -35,7 +35,7 @@ public class AuthenticationFilter implements GlobalFilter, Ordered {
     IdentityService identityService;
     private static final Logger log = LoggerFactory.getLogger(AuthenticationFilter.class);
     @NonFinal
-    String[] publicEndpoints = {"/identity/v1/auth/.*", "/identity/users/registrations"};// configuration for api endpoints we want to public , no need to authenticate; using regex
+    String[] publicEndpoints = {"/identity/auth/.*", "/identity/users/registrations"};// configuration for api endpoints we want to public , no need to authenticate; using regex
 
     @NonFinal
     @Value(value = "${app.api-prefix}")
@@ -46,7 +46,7 @@ public class AuthenticationFilter implements GlobalFilter, Ordered {
         log.info("enter authentication filter "); // when we implement request thought gateway -> into this log
 
         if ((isEndpointPublic(exchange.getRequest()))) { // check if endpoint have public
-            return chain.filter(exchange); // if true -> pass
+            return chain.filter(exchange); // if true -> pass -> can call to downstream service
         }
 
 
@@ -63,7 +63,7 @@ public class AuthenticationFilter implements GlobalFilter, Ordered {
         // delegate to identity service
         return identityService.introspect(token).flatMap(introspectResponseApiResponse -> {
             if (introspectResponseApiResponse.getResult().isValid()) {
-                // continue filter chain
+                // continue filter chain -> can call to downstream service
                 return chain.filter(exchange);
             } else {
                 return unauthenticated(exchange.getResponse());
@@ -82,7 +82,7 @@ public class AuthenticationFilter implements GlobalFilter, Ordered {
 
     Mono<Void> unauthenticated(ServerHttpResponse response) {
         ObjectMapper objectMapper = new ObjectMapper();
-        ApiResponse<?> apiResponse = ApiResponse.builder().code(1004).message("Unauthenticated").build();
+        ApiResponse<?> apiResponse = ApiResponse.builder().code(1004).message("API Gateway Unauthenticated").build();
         String body = null;
         try {
             body = objectMapper.writeValueAsString(apiResponse);

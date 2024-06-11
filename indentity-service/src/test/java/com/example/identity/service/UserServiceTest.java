@@ -60,17 +60,11 @@ public class UserServiceTest {
         userResponse = UserResponse.builder()
                 .id("9999")
                 .username("huutri")
-                .firstName("huu")
-                .lastName("ly")
-                .dob(doB)
                 .build();
 
         user = User.builder()
                 .id("9999")
                 .username("huutri")
-                .firstName("huu")
-                .lastName("ly")
-                .dob(doB)
                 .build();
     }
 

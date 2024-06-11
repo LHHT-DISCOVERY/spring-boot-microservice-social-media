@@ -23,9 +23,9 @@ import org.springframework.web.filter.CorsFilter;
 public class SecurityConfig {
     // no need authenticate and authorization should be take all url in String[] PUBLIC_ENDPOINT and config url in
     // method filterChain
-    private final String[] PUBLIC_ENDPOINT = {"/v1/users/registrations", "/v1/auth/**", "/v1/permissions/**", "/v1/roles/**"
+    private final String[] PUBLIC_ENDPOINT = {"/users/registrations", "/auth/**", "/permissions/**", "/roles/**"
     };
-    private final String[] ADMIN_ENDPOINT = {"/v1/users/list"};
+    private final String[] ADMIN_ENDPOINT = {"/users/list"};
 
     CustomJwtDecoder customJwtDecoder;
 

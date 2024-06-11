@@ -1,8 +1,10 @@
 package com.example.identity.controller;
 
-import java.time.LocalDate;
-import java.util.List;
-
+import com.example.identity.dto.request.UserCreateRequest;
+import com.example.identity.dto.response.UserResponse;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,12 +20,8 @@ import org.testcontainers.containers.MySQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
-import com.example.identity.dto.request.UserCreateRequest;
-import com.example.identity.dto.response.UserResponse;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-
-import lombok.extern.slf4j.Slf4j;
+import java.time.LocalDate;
+import java.util.List;
 
 @SpringBootTest
 @Slf4j
@@ -57,7 +55,7 @@ public class IntegrationUserControllerTest {
     private List<String> roles;
 
     @BeforeEach
-    // fake data before run
+        // fake data before run
     void initData() {
         doB = LocalDate.of(2001, 10, 20);
         roles = List.of("USER");
@@ -72,9 +70,6 @@ public class IntegrationUserControllerTest {
         userResponse = UserResponse.builder()
                 .id("9999")
                 .username("huutri")
-                .firstName("huu")
-                .lastName("ly")
-                .dob(doB)
                 .build();
     }
 
@@ -91,7 +86,7 @@ public class IntegrationUserControllerTest {
         // using Bean @Autowired private MockMvc mockMvc,  mockMvc.perform (...) to test method in class controller
         var response = mockMvc.perform(
                         MockMvcRequestBuilders // create request
-                                .post("/v1/users/public/create") // URL
+                                .post("/users/public/create") // URL
                                 .contentType(MediaType.APPLICATION_JSON_VALUE) // request type
                                 .content(content)) // param request
                 // THEN

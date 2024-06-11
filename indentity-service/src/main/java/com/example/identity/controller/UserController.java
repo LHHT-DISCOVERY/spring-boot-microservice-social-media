@@ -24,7 +24,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
 @RestController
-@RequestMapping("/v1/users")
+@RequestMapping("/users")
 // DI bằng constructor
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
@@ -40,7 +40,7 @@ public class UserController {
         ApiResponse<UserResponse> userApiResponse = new ApiResponse<>();
         userApiResponse.setResult(userService.createEntity(usercreateRequest));
         AuditLogger.info(
-                "System Create User", AuditEventType.SIGN_UP, AuditStatus.SUCCESS, "Call API /v1/users/public/create");
+                "System Create User", AuditEventType.SIGN_UP, AuditStatus.SUCCESS, "Call API /users/public/create");
         return userApiResponse;
     }
 
