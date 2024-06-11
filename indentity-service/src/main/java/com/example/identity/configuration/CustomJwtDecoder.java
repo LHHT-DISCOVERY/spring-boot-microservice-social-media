@@ -16,6 +16,7 @@ public class CustomJwtDecoder implements JwtDecoder {
     @Override
     public Jwt decode(String token) throws JwtException {
         // because token was be verified in api gateway before, so we no need verification token again
+        // api gateway authentication and then authorization at microservice
         try {
             SignedJWT signedJWT = SignedJWT.parse(token); // decode token
             return new Jwt(token,

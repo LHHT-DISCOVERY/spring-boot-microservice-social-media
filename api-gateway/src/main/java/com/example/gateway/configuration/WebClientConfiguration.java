@@ -8,6 +8,7 @@ import org.springframework.web.reactive.function.client.support.WebClientAdapter
 import org.springframework.web.service.invoker.HttpServiceProxyFactory;
 
 @Configuration
+// because using @PostExchange in repo, not using FeignClient ,so need this class to can call to server identity
 public class WebClientConfiguration {
     @Bean
     WebClient webClient() {

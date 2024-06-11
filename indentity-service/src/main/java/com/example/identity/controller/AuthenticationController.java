@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.text.ParseException;
 
 @RestController
-@RequestMapping("/v1/auth")
+@RequestMapping("/auth")
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class AuthenticationController {
@@ -35,7 +35,7 @@ public class AuthenticationController {
         ApiResponse<AuthenticationResponse> apiResponse = new ApiResponse<>();
         apiResponse.setResult(result);
         AuditLogger.info(
-                "System Create Token", AuditEventType.LOGIN, AuditStatus.SUCCESS, "Call API /v1/auth/token");
+                "System Create Token", AuditEventType.LOGIN, AuditStatus.SUCCESS, "Call API /auth/token");
         return apiResponse;
     }
 
@@ -53,7 +53,7 @@ public class AuthenticationController {
         authenticationService.logout(introspectTokenRequest);
         ApiResponse<Void> apiResponse = new ApiResponse<>();
         AuditLogger.info(
-                "System Create Token", AuditEventType.LOGOUT, AuditStatus.SUCCESS, "Call API /v1/auth/logout");
+                "System Create Token", AuditEventType.LOGOUT, AuditStatus.SUCCESS, "Call API /auth/logout");
         return apiResponse;
     }
 
@@ -64,7 +64,7 @@ public class AuthenticationController {
         ApiResponse<AuthenticationResponse> apiResponse = new ApiResponse<>();
         apiResponse.setResult(result);
         AuditLogger.info(
-                "System Create Token", AuditEventType.LOGIN, AuditStatus.SUCCESS, "Call API /v1/auth/refresh");
+                "System Create Token", AuditEventType.LOGIN, AuditStatus.SUCCESS, "Call API /auth/refresh");
         return apiResponse;
     }
 }

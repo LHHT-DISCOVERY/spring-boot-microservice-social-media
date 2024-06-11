@@ -54,9 +54,6 @@ public class UserControllerTest {
         userResponse = UserResponse.builder()
                 .id("9999")
                 .username("huutri")
-                .firstName("huu")
-                .lastName("ly")
-                .dob(doB)
                 .build();
     }
 
@@ -77,7 +74,7 @@ public class UserControllerTest {
         // using Bean @Autowired private MockMvc mockMvc,  mockMvc.perform (...) to test method in class controller
         mockMvc.perform(
                         MockMvcRequestBuilders // create request
-                                .post("/v1/users/public/create") // URL
+                                .post("/users/public/create") // URL
                                 .contentType(MediaType.APPLICATION_JSON_VALUE) // request type
                                 .content(content)) // param request
                 // THEN
@@ -94,7 +91,7 @@ public class UserControllerTest {
         userCreateRequest.setUsername("tri");
         String content = objectMapper.writeValueAsString(userCreateRequest);
 
-        mockMvc.perform(MockMvcRequestBuilders.post("/v1/users/public/create")
+        mockMvc.perform(MockMvcRequestBuilders.post("/users/public/create")
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
                         .content(content))
                 .andExpect(MockMvcResultMatchers.status().isBadRequest())

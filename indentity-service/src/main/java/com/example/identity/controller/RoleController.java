@@ -17,7 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 @RestController
 @RequiredArgsConstructor
 @Slf4j
-@RequestMapping("/v1/roles")
+@RequestMapping("/roles")
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class RoleController {
     RoleService roleService;

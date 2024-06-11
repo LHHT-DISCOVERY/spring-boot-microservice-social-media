@@ -23,8 +23,8 @@ import org.springframework.web.filter.CorsFilter;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class SecurityConfig {
     // no need authenticate and authorization should be take all url in String[] PUBLIC_ENDPOINT and config url in
-    // method filterChain
-    private final String[] PUBLIC_ENDPOINT = {};
+    // method filterChain and this endpoint access and no need token to authentication and authorization
+    private final String[] PUBLIC_ENDPOINT = {"/internal/create"}; // endpoint "/internal" change to public to no need token but not exposed to api gateway
 
     CustomJwtDecoder customJwtDecoder;
 
