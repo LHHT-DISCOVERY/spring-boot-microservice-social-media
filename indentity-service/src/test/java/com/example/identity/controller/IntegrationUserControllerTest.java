@@ -1,16 +1,22 @@
 package com.example.identity.controller;
 
+import com.example.identity.dto.request.ProfileCreateRequest;
 import com.example.identity.dto.request.UserCreateRequest;
+import com.example.identity.dto.response.UserProfileResponse;
 import com.example.identity.dto.response.UserResponse;
+import com.example.identity.repository.http_client.ProfileClient;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
@@ -22,6 +28,8 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 
 import java.time.LocalDate;
 import java.util.List;
+
+import static org.mockito.ArgumentMatchers.anyString;
 
 @SpringBootTest
 @Slf4j
@@ -47,6 +55,9 @@ public class IntegrationUserControllerTest {
         dynamicPropertyRegistry.add("spring.datasource.driverClassName", () -> "com.mysql.cj.jdbc.Driver");
         dynamicPropertyRegistry.add("spring.jpa.hibernate.ddl-auto", () -> "update");
     }
+
+    @MockBean
+    private ProfileClient profileClient;
 
     // declare data input and output , show in method (param and return data) in controller
     private UserCreateRequest userCreateRequest;
@@ -80,22 +91,21 @@ public class IntegrationUserControllerTest {
         // change local date to string -> import in xml -> line 124
         objectMapper.registerModule(new JavaTimeModule());
         String content = objectMapper.writeValueAsString(userCreateRequest);
+        Mockito.when(profileClient.createProfile(new ProfileCreateRequest())).thenReturn(new UserProfileResponse());
 
         // WHEN (this mean test anything -> using test API)
         // THEN (this mean -> expect things -> this mean can response,... )
         // using Bean @Autowired private MockMvc mockMvc,  mockMvc.perform (...) to test method in class controller
         var response = mockMvc.perform(
                         MockMvcRequestBuilders // create request
-                                .post("/users/public/create") // URL
+                                .post("/users/registrations") // URL
                                 .contentType(MediaType.APPLICATION_JSON_VALUE) // request type
                                 .content(content)) // param request
                 // THEN
                 .andExpect(MockMvcResultMatchers.status().isOk()) // status code
                 .andExpect(MockMvcResultMatchers.jsonPath("code").value(1000)) // get result in response to compare
                 .andExpect(MockMvcResultMatchers.jsonPath("result.username")
-                        .value("huutri")) // expect more value in response from postman;
-                .andExpect(MockMvcResultMatchers.jsonPath("result.firstName")
-                        .value("huu")); // expect more value in response from postman;
+                        .value("huutri")); // expect more value in response from postman;
         log.info(
                 "result: {}",
                 response.andReturn().getResponse().getContentAsString()); // get a response return from api

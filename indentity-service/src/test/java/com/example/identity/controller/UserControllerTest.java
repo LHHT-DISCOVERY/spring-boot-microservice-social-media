@@ -11,6 +11,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -74,7 +75,7 @@ public class UserControllerTest {
         // using Bean @Autowired private MockMvc mockMvc,  mockMvc.perform (...) to test method in class controller
         mockMvc.perform(
                         MockMvcRequestBuilders // create request
-                                .post("/users/public/create") // URL
+                                .post("/users/registrations") // URL
                                 .contentType(MediaType.APPLICATION_JSON_VALUE) // request type
                                 .content(content)) // param request
                 // THEN
@@ -91,7 +92,7 @@ public class UserControllerTest {
         userCreateRequest.setUsername("tri");
         String content = objectMapper.writeValueAsString(userCreateRequest);
 
-        mockMvc.perform(MockMvcRequestBuilders.post("/users/public/create")
+        mockMvc.perform(MockMvcRequestBuilders.post("/users/registrations")
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
                         .content(content))
                 .andExpect(MockMvcResultMatchers.status().isBadRequest())
