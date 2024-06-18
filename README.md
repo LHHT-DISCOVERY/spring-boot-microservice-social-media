@@ -4,7 +4,9 @@
 
 ### 1. **install MYSQL from docker** 
 
+#### Start Docker
 #### Install MYSQL from Docker Hub
+#### CLI type:
 ```docker pull mysql:8.0.36-debian```
 
 #### 0: "docker run" using to run image (then run -> show in container) we just pull from docker hub
@@ -22,12 +24,13 @@ https://dev.mysql.com/downloads/file/?id=525959
 
 ### 2. **install Mongodb from docker**
 
+#### Start Docker
 #### Install Mongodb from Docker Hub
-
+#### CLI type:
 ```docker pull bitnami/mongodb:7.0.11```
 
 #### Start Mongodb server at port 27017 with root username and password: root/root
-
+#### CLI type:
 ``` docker run -d --name mongodb-7.0.11 -p 27017:27017 -e MONGODB_ROOT_USER=root -e MONGODB_ROOT_PASSWORD=root bitnami/mongodb:7.0.11 ```
 
 #### download Mongo compass :
@@ -43,24 +46,14 @@ https://www.mongodb.com/try/download/compass
         -> successful ```
 
 
-### 3. **install Mongodb from docker**
+### 3. **install GraphDB NEO4J from docker**
 
-#### Install Mongodb from Docker Hub
+#### Start Docker
+#### Install Neo4j from Docker Hub
+#### CLI type:
+```docker pull neo4j:latest```
 
-```docker pull bitnami/mongodb:7.0.11```
-
-#### Start Mongodb server at port 27017 with root username and password: root/root
-
-``` docker run -d --name mongodb-7.0.11 -p 27017:27017 -e MONGODB_ROOT_USER=root -e MONGODB_ROOT_PASSWORD=root bitnami/mongodb:7.0.11 ```
-
-#### download Mongo compass :
-
-https://dev.mysql.com/downloads/file/?id=525959
-
-#### connect from Mongo compass to Mongo server at port: 27017
-
-    ``` Advanced Connection Options 
-        -> authentication 
-        -> enter username and password 
-        -> connect 
-        -> successful ```
+#### Start Neo4j server at port 7474 (admin page run on web) with root username and password: neo4j/12345678
+#### at port 7687 -> connect to admin server (7474)
+#### CLI type:
+``` docker run --publish=7474:7474 --publish=7687:7687 -e 'NEO4J_AUTH=neo4j/12345678' neo4j:latest```
