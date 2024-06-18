@@ -25,7 +25,7 @@ spring:
           filters:
             - StripPrefix=1 # remove "/api" in path (this mean, get path "/profile/**" )
         - id : notification-service
-          uri: http://localhost:6666
+          uri: http://localhost:8082
           predicates:
             - Path=${app.api-prefix}/notification/**
           filters:
