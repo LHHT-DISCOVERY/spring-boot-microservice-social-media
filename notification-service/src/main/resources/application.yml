@@ -3,7 +3,7 @@ server:
   servlet:
     context-path: /notification
 email:
-  third-party-uri :
+  third-party-uri : https://api.brevo.com
   apiKeyEmail:
 spring:
   application:
