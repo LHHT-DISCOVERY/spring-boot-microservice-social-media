@@ -15,3 +15,17 @@
 # 4 : "-d mysql:8.0.36-debian" version of mysql image just pull from docker hub, "8.0.36-debian"
 # 
 #  CLI type: docker run --name mysql-8.0.36 -p 3306:3306 -e MYSQL_ROOT_PASSWORD=123456 -d mysql:8.0.36-debian
+
+
+### 2. **install Mongodb from docker**
+#  Install Mongodb from Docker Hub
+
+#  docker pull bitnami/mongodb:7.0.11
+
+#  Start Mongodb server at port 27017 with root username and password: root/root
+
+ ``` bash docker run -d --name mongodb-7.0.11 -p 27017:27017 -e MONGODB_ROOT_USER=root -e MONGODB_ROOT_PASSWORD=root bitnami/mongodb:7.0.11 ```
+
+#  download Mongo compass :
+https://www.mongodb.com/try/download/compass
+#  Advanced Connection Options -> authentication -> enter username and password -> connect -> successful
