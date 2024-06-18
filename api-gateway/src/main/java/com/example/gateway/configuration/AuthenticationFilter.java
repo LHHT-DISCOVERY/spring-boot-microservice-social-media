@@ -35,7 +35,7 @@ public class AuthenticationFilter implements GlobalFilter, Ordered {
     IdentityService identityService;
     private static final Logger log = LoggerFactory.getLogger(AuthenticationFilter.class);
     @NonFinal
-    String[] publicEndpoints = {"/identity/auth/.*", "/identity/users/registrations"};// configuration for api endpoints we want to public , no need to authenticate; using regex
+    String[] publicEndpoints = {"/identity/auth/.*", "/identity/users/registrations", "/notification/email/send"};// configuration for api endpoints we want to public , no need to authenticate; using regex
 
     @NonFinal
     @Value(value = "${app.api-prefix}")
