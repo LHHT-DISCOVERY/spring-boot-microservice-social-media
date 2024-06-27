@@ -1,0 +1,9 @@
+# example: we only want to change jwt token in env prod, but keep other values same as in application.yml of dev environment
+# this means that : url db of prod env same as url db of dev env,..v...v...
+jwt:
+  valid-duration: 3600 #in second
+  refreshable-duration: 360000 #in second
+spring:
+  config:
+    active:
+      on-profile: prod #config for profile 'prod'

@@ -12,7 +12,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/test?useUnicode=true&characterEncoding=utf8&useSSL=false
     username: root
-    password: 123456
+    password: ${DBMS_PASSWORD:123456}
     hikari:
       data-source-properties:
         cachePrepStmts: true
@@ -33,7 +33,7 @@ spring:
     open-in-view: false
   config:
     active:
-      on-profile: dev
+      on-profile: dev # this mean, when Packing the application into a jar that will use this file
 app:
   service:
     profile: http://localhost:4567/profile
