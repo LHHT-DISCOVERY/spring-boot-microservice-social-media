@@ -4,7 +4,7 @@
 
 
 
-### 1. **------------------------------------------install MYSQL from docker ------------------------------------------** 
+### 1. **------------------------ Install MYSQL from docker ------------------------** 
 
 #### Start Docker
 #### Install MYSQL from Docker Hub
@@ -24,7 +24,7 @@ https://dev.mysql.com/downloads/file/?id=525959
 
 
 
-### 2. **------------------------------------------ Install Mongodb from docker ------------------------------------------**
+### 2. **------------------------ Install Mongodb from docker ------------------------**
 
 #### Start Docker
 #### Install Mongodb from Docker Hub
@@ -50,7 +50,7 @@ https://www.mongodb.com/try/download/compass
 
 
 
-### 3. **------------------------------------------ Install GraphDB NEO4J from docker ------------------------------------------**
+### 3. **------------------------ Install GraphDB NEO4J from docker ------------------------**
 
 #### Start Docker
 #### Install Neo4j from Docker Hub
@@ -64,7 +64,7 @@ https://www.mongodb.com/try/download/compass
 
 
 
-### 4. **------------------------------------------ Using Profile and variable environment ------------------------------------------**
+### 4. **------------------------ Using Profile and variable environment ------------------------**
 
 #### Using Profile
 ##### Docs Spring : https://docs.spring.io/spring-boot/reference/features/profiles.html
@@ -119,7 +119,7 @@ https://www.mongodb.com/try/download/compass
 
 
 
-### 5. **------------------------------------------ Using Variable Environment ------------------------------------------**
+### 5. **------------------------ Using Variable Environment ------------------------**
 
 #### target is hide essential information in application yml config 
 ##### Docs Spring : https://docs.spring.io/spring-boot/reference/features/external-config.html
