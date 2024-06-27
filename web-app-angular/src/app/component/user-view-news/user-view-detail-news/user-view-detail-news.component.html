@@ -1,0 +1,163 @@
+<app-nav></app-nav>
+<div class="row m-0" >
+  <div class="col-md-2"></div>
+  <div class="col-12 col-md-8  shadow shadow-lg p-4 rounded-3 my-3">
+    <div class="row">
+      <div class="col-lg-3 text-center mb-3">
+        <div CLASS="movie_image">
+          <span class="movie_rating">{{"" | number: '0.1' }}</span>
+          <img
+            [src]="" alt="loading..." class="w-100 height-image" (error)="($event)"
+            style="border: 2px solid #F26B38;"
+          >
+        </div>
+      </div>
+      <div class="col-lg-9 table-responsive">
+        <div class="col">
+          <div class="title">
+            <h2 class="d-block mb-2">HI</h2>
+            <hr>
+          </div>
+          <div>
+            <form >
+              <div>
+                <button class="rating_desc btn__common d-flex align-items-center custom-button-size"
+                        data-bs-toggle="modal"
+                        data-bs-target="#myModalForRating">
+                  THAY ĐỔI ĐÁNH GIÁ
+                </button>
+              </div>
+              <ng-template #elseBlock>
+                <button class="rating_desc btn__common d-flex align-items-center custom-button-size"
+                        data-bs-toggle="modal"
+                        data-bs-target="#myModalForRating">
+                  ĐÁNH GIÁ
+                </button>
+              </ng-template>
+
+              <fieldset>
+                <section>
+                  <div class="rate">
+                    <input type="radio" id="star5" name="rating" [value]=5 formControlName="rating"/>
+                    <label for="star5" title="text">5 stars</label>
+                    <input type="radio" id="star4" name="rating" [value]=4 formControlName="rating"/>
+                    <label for="star4" title="text">4 stars</label>
+                    <input type="radio" id="star3" name="rating" [value]=3 formControlName="rating"/>
+                    <label for="star3" title="text">3 stars</label>
+                    <input type="radio" id="star2" name="rating" [value]=2 formControlName="rating"/>
+                    <label for="star2" title="text">2 stars</label>
+                    <input type="radio" id="star1" name="rating" [value]=1 formControlName="rating"/>
+                    <label for="star1" title="text">1 star</label>
+                  </div>
+                </section>
+              </fieldset>
+            </form>
+          </div>
+          <div class="detail__ticket px-3">
+            <table class="table">
+              <tbody>
+              <tr>
+                <th scope="row">Khởi chiếu:</th>
+                <td>Từ ttt | date:'dd/MM/yyyy't</td>
+              </tr>
+              <tr>
+                <th scope="row">Loại phim:</th>
+                <td>
+                  ttt
+                </td>
+              </tr>
+              <tr>
+                <th scope="row">Diễn Viên:</th>
+                <td>
+                 ttt
+                </td>
+              </tr>
+              <tr>
+                <th scope="row">Đạo Diễn:</th>
+                <td>
+                 tt
+                </td>
+              </tr>
+              <tr>
+                <th scope="row">Thời lượng:</th>
+                <td>tt phút</td>
+              </tr>
+              <tr>
+                <th scope="row">Ngôn ngữ:</th>
+                <td>ttt</td>
+              </tr>
+              <tr>
+                <th scope="row">Hãng:</th>
+                <td>
+                ttt
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="btn-active py-3 d-flex">
+            <button class="btn__common d-flex align-items-center me-2"  >
+              ĐẶT VÉ
+            </button>
+
+            <button type="button" class="btn__trailer d-flex align-items-center"
+                    data-bs-toggle="modal"
+                    data-bs-target="#myModal"
+                  >
+              TRAILER
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+    </div>
+    <div>
+      <h3 class="flex-fill">NỘI DUNG PHIM</h3>
+    </div>
+    <div id="content">
+      <p class="m_4">tt
+      </p>
+    </div>
+  </div>
+  <div class="col-md-2"></div>
+</div>
+<div class="bs-example">
+  <!-- Modal HTML -->
+  <div id="myModal" class="modal fade" >
+    <div class="modal-dialog modal-dialog-centered" style="left: -10%" >
+      <div class="modal-content">
+        <div class="modal-body" style="padding: 0">
+          <div class="embed-responsive embed-responsive-16by9">
+            <iframe id="trailerVideo" width="180%" height="500"
+                   
+                    title="YouTube video player" frameborder="10"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowfullscreen></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-dialog " role="document" >
+      <div class="modal-content" style="border-radius: 20px">
+        <div class="modal-body" style="background:#F26B38;  color: white; border-radius: 10px">
+          <span>"Không tải được video"</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="myModalForRating" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog " role="document">
+    <div class="modal-content" style="border-radius: 20px">
+
+      <div class="modal-body" style="background:#F26B38;  color: white; border-radius: 10px">
+        <span></span>
+      </div>
+    </div>
+  </div>
+</div>
+<app-auth-modal></app-auth-modal>

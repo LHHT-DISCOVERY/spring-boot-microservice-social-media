@@ -1,16 +1,4 @@
-// import axios from "axios"; // using request api under backend
-// import { CONFIG } from "./configuration";
-
-// const httpClient = axios.create({
-//     baseUrl: CONFIG.API_GATEWAY,
-//     timeout: 30000,
-//     headers:{
-//         "Content-Type" : "application/json"
-//     },
-// })
-
-// export default httpClient;
-
+// using request api under backend
 import axios from "axios";
 import { CONFIG } from "./configuration";
 

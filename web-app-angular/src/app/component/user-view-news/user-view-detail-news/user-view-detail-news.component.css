@@ -1,0 +1,152 @@
+.btn__common {
+    background-color: #F26B38;
+    color: white;
+    font-weight: bold;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 4px;
+  }
+  
+  .btn__trailer {
+    background-color: #1984EF;
+    color: white;
+    font-weight: bold;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 4px;
+  }
+  
+  .btn__common:hover {
+    color: white;
+    background-color: #877D7A;
+  }
+  
+  .btn__trailer:hover {
+    color: white;
+    background-color: #877D7A;
+  }
+  
+  th {
+    width: 150px;
+  }
+  
+  /*detail*/
+  .rate {
+    margin-top: 10px;
+    float: left;
+    height: 46px;
+    padding: 0 10px;
+  }
+  
+  .rate:not(:checked) > input {
+    position: absolute;
+    top: -9999px;
+  }
+  
+  .rate:not(:checked) > label {
+    float: right;
+    width: 1em;
+    overflow: hidden;
+    white-space: nowrap;
+    cursor: pointer;
+    font-size: 30px;
+    color: #ccc;
+  }
+  
+  .rate:not(:checked) > label:before {
+    content: '★ ';
+  }
+  
+  .rate > input:checked ~ label {
+    color: #F26B38;
+  }
+  
+  .rate:not(:checked) > label:hover,
+  .rate:not(:checked) > label:hover ~ label {
+    color: #F26B38;
+  }
+  
+  .rate > input:checked + label:hover,
+  .rate > input:checked + label:hover ~ label,
+  .rate > input:checked ~ label:hover,
+  .rate > input:checked ~ label:hover ~ label,
+  .rate > label:hover ~ input:checked ~ label {
+    color: #F26B38;
+  }
+  
+  .rating_desc {
+    margin-top: 10px;
+    float: left;
+  }
+  
+  .rating_desc p {
+    color: #000;
+    font-size: 1.2em;
+  }
+  
+  .movie_image {
+    position: relative;
+  }
+  
+  .movie_rating {
+    width: 47px;
+    height: 47px;
+    padding-top: 10px;
+    -webkit-border-radius: 24px;
+    -moz-border-radius: 24px;
+    border-radius: 24px;
+    background-color: #F26B38;
+    border: solid 3px #fff;
+    font: 16px 'Roboto', sans-serif;
+    color: #fff;
+    text-align: center;
+    font-weight: bold;
+    /*float: left;*/
+    position: absolute;
+    top: 10px;
+    /*right: 6px;*/
+    left: 10px;
+  }
+  
+  .book_btn {
+    margin-top: 1em;
+    margin-bottom: 1em;
+  }
+  
+  /*Video utube*/
+  .bs-example {
+    margin: 20px;
+  }
+  
+  .modal-dialog iframe {
+    margin: 0 auto;
+    display: block;
+  }
+  
+  @media (max-width: 500px){
+    div.row {
+      width: 500px;
+    }
+  }
+  
+  .height-image{
+    height: 400px;
+  }
+  
+  @media (max-width: 1100px) {
+    .height-image {
+      height: auto;
+    }
+  }
+  
+  .custom-button-size {
+    width: 150px;
+    height: 50px;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  
+  }
+  
+  

@@ -1,0 +1,55 @@
+<!-- Header -->
+<header id="header" class="bg-secondary">
+    <nav class="container mx-auto flex justify-start items-center py-8 px-4">
+      <!-- App Name -->
+      <a class="text-3xl text-indigo-400 font-bold uppercase mr-4" href="index.html">eSportFlick   </a>
+  
+      <div class="flex flex-grow items-center">
+        <!-- Primary Navigation -->
+        <ul class="flex flex-row mt-1 justify-center">
+          <!-- Navigation Links -->
+          <div class="flex items-center space-x-8"> 
+            <li>
+              <a class="px-2 text-gray-300 font-bold" href="#">Arena of Valor</a>
+            </li>
+            <li>
+              <a class="x-2 text-gray-300 font-bold" href="#">PUBG Mobile</a>
+            </li>
+            <li>
+              <a class="px-2 text-gray-300 font-bold" href="about.html">League of Legends</a>
+            </li>
+  
+            <li>
+              <a class="x-2 text-gray-300 font-bold" href="about.html">Crossfire</a>
+            </li>
+  
+            <li>
+              
+            </li>
+          </div>
+          <div class="flex items-center space-x-5">
+            <li>
+              <div class="relative flex items-center">
+                <input #search type="search" name="search" class="px-2 bg-while-400 font-bold rounded-md text-indigo-400 pr-10"
+                       placeholder="Search..."
+                       aria-label="Search">
+                <button class="absolute right-0 my-1" style="pointer-events: all;">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" height="24" viewBox="0 0 24 24" width="24" focusable="false" style="pointer-events: none; background-color:rgb(129 140 248 / var(--tw-text-opacity)); color: rgb(255, 255, 255)">
+                    <path clip-rule="evenodd" d="M16.296 16.996a8 8 0 11.707-.708l3.909 3.91-.707.707-3.909-3.909ZM18 11a7 7 0 11-14 0 7 7 0 0114 0Z" fill-rule="evenodd"></path>
+                  </svg>
+                </button>
+              </div>
+            </li>
+  
+            <li>
+              <a class="px-2 text-indigo-400 font-bold uppercase " href="#" 
+                (click)="openModal($event)">
+                Login & Register
+              </a>
+            </li>  
+          </div>
+          
+        </ul>
+      </div>
+    </nav>
+  </header>

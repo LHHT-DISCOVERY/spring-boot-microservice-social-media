@@ -1,0 +1,56 @@
+<!-- Login Form -->
+<form #loginForm="ngForm" (ngSubmit)="login()">
+  <!-- Google -->
+  <div class="mb-3">
+    <button type="submit"
+    class="relative block w-full bg-indigo-400 text-white py-1.5 px-3 rounded transition
+    hover:bg-indigo-500 disabled:opacity-50 disabled:bg-indigo-400 flex justify-center ">
+    <img  style="width: 25px; height: 25px;" alt="Login with Google" src="https://hrcdn.net/fcore/assets/google-colored-20b8216731.svg">
+    <span >Continue with Google</span>
+      
+    </button>
+    </div>
+<!-- Facebook -->
+    <div class="mb-3 flex justify-center">
+      <button type="submit"
+        class="relative block w-full bg-indigo-400 text-white py-1.5 px-3 rounded transition
+        hover:bg-indigo-500 disabled:opacity-50 disabled:bg-indigo-400 flex justify-center ">
+        <img style="width: 25px; height: 25px;" alt="Login with Google" src="https://www.svgrepo.com/show/349359/facebook.svg">
+        <span>Continue with Facebook</span>
+        
+      </button>
+      </div>
+    <!-- Email -->
+    <div class="mb-3">
+      <label class="inline-block mb-2">Username</label>
+      <input #useranme="ngModel"
+        name="username" [(ngModel)]="credentials.username"
+        class="block w-full py-1.5 px-3 text-gray-200 border border-gray-400 transition
+          duration-500 focus:outline-none rounded bg-transparent
+          focus:border-indigo-400"
+        placeholder="Enter Username" required />
+      <p *ngIf="useranme.errors && useranme.touched" class="text-red-400">
+        Username is required
+      </p>
+    </div>
+    <!-- Password -->
+    <div class="mb-3">
+      <label class="inline-block mb-2">Password</label>
+      <input type="password" name="password" 
+        [(ngModel)]="credentials.password"
+        required #password="ngModel"
+        class="block w-full py-1.5 px-3 text-gray-200 border border-gray-400 transition
+        duration-500 focus:outline-none rounded bg-transparent focus:border-indigo-400"
+        placeholder="Password" />
+      <p *ngIf="password.errors && password.touched && password.dirty" class="text-red-400">
+        Password is invalid
+      </p>
+    </div>
+    <div class="mb-3">
+    <button type="submit" [disabled]="loginForm.invalid"
+      class="block w-full bg-indigo-400 text-white py-1.5 px-3 rounded transition
+        hover:bg-indigo-500 disabled:opacity-50 disabled:bg-indigo-400">
+      Login
+    </button>
+    </div>
+  </form>
