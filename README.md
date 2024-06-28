@@ -2,6 +2,58 @@
 
 ## Microservices đang là kiến trúc được sử dụng rộng rãi nhất hiện nay, repo này thực hiện cách triển khai micoservices với spring boot 3 thông qua việc xây dựng từ đầu dự án mạng xã hội
 
+## RoadMap Spring Microservices
+### ------------------------ Spring Cloud ------------------------ 
+#### API Gateway and Load balancer
+    ``` API Gateway and Load balancer , it same as layer , "ontop" of microservices below side,
+        ,It will responsibility Navigation of requests to each service , can load balancer```
+#### Http Clients (OpenFeign,...)
+    ``` Http Clients need to communicate between microservices -> standard communication precent is protocol HTTP
+        , we need to understand and using smoothly Http Clients , in spring cloud usally (OpenFeign) because it no need implementation many code
+        ```
+#### Distributed Logging, Tracing, metric (ELK stack, Zipkin, Grafana)
+    ``` This Distributed Logging, Tracing, metric includes information about system that we can observe : logging (log information of the system) 
+        , tracing (we tracking a request from api gateway, then this request how many microservices will go thought ) 
+
+        including tool to resolve the above problem (we only understand and using this tool):
+        - OpenTelemetry : is a protocol supported logging,tracing and metric
+        - Promethues : help we collect information from microservices by real time, using for metrics
+        - Grafana : same Presentation Layer of "Promethues", Promethues will collect information 
+            ->  Grafana responsible for show data to we can know and tracking information
+        - Zipkin : help we know a request how many microservices will go thought and How much time does this request take at each microservice
+        - ELK stack (important): using for logging, Elasticsearch , Loggstack and Kibana - help we collect information ,search and show log
+        ```
+#### Resilient microservices (SAGA pattern, Circuits breaker pattern, Bulk Head)
+    ```  Resilient microservices to secure each microservice run stable and can restore when met incident
+    including pattern to resolve the above problem:
+        - SAGA pattern : help and process management transaction of microservices -> this mean one: all successful ,or two: rollback all
+        - Circuits breaker pattern : because microservices interdependence, when one service happen incident -> influence the other services
+            (ex: has a request from service1 call to service2 -> happens incident -> interupt connect to that service2 -> when service2 run successful -> normal operation )
+                -> need to apply Circuits breaker pattern at service1 -> to avoid take time
+        - Bulk Head : target Bulk Head is handle problems with number of request larger than ability to process of service -> cause issue
+                -> so, we determine the number of requests that reach the service processing limit 
+                    -> we will informational is "server can busy" -> we can will process this request at a later time
+    ```
+#### Documentation with swagger
+    ``` To microservices communicate with each other , we need to using Documentation with swagger to do standard for api
+        ex: what is respons? , what is request body? , what is parameter? ,.... it will handle by swagger```
+### ------------------------ Architecture ------------------------
+#### DDD (Domain Driven Design)
+    ``` Designing a system by domain, simply understood as a business, a certain field, e.g., 
+    ex: a system with many business, we will subdivide each business, and each microservice will handle each business differently 
+    ex detail : (userservice is responsible for managing users, notificationservice are responsible for managing such as email, SMS,.. etc...) ```
+#### EDD (Event Driven Design) (Kafka, RabbitMQ)
+    ``` Designing a system operator by events, when cause event -> create trigger another microservice
+        Include tools:
+        - Kafka : help we transport messages from this microservice to other microservices
+        - RabbitMQ : ...
+    ```
+### ------------------------ Devops ------------------------
+#### Docker
+#### K8s
+#### AWS/Azure/GCP
+#### Github Actions , GitLab CI/CD
+#### Jenkin
 
 
 ### 1. **------------------------ Install MYSQL from docker ------------------------** 
