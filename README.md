@@ -173,7 +173,7 @@ https://www.mongodb.com/try/download/compass
 
 ### 5. **------------------------ Using Variable Environment ------------------------**
 
-#### target is hide essential information in application yml config 
+#### target is hide essential information need to secure about security in application yml config 
 ##### Docs Spring : https://docs.spring.io/spring-boot/reference/features/external-config.html
     ``` To convert a property name in the canonical-form to an environment variable name you can follow these rules:
     - Replace dots (.) with underscores (_).
@@ -181,7 +181,7 @@ https://www.mongodb.com/try/download/compass
     - Convert to uppercase.```
 ##### 1.Start Intellij
 ##### 2.At application of service need run, side right button debug -> click ``` ...```  -> choose ``` edit ```  -> choose ``` Environment variables```  -> choose icon ``` same book``` -> type ```Name``` and ```Value``` , Note that: when type ```Name``` need to implement role above
-##### 3.Remove variable im yml application that we used at step4 -> Run application again  
+##### 3.Remove variable im yml application because that we used at step2 -> Run application again  
     ``` ex: create variable environment in yml file to hide value 3600 of jwt valid-duration: 
 
     ----------------- C1 -----------------
@@ -189,10 +189,17 @@ https://www.mongodb.com/try/download/compass
 
          jwt:
             valid-duration: 3600
+            refresh: 36000
 
     -> value is: jwt.valid-duration -> have value 3600
-    -> convert to variable environment by introduction step2 above: type  "Name" is : JWT_VALIDDURATION -> "Name" is valid by rules above, then type "Value" : 3600;
-    -> result will hide value need to security
+    -> convert to variable environment by introduction rules above: type  "Name" is : JWT_VALIDDURATION -> "Name" is valid by rules above, then type "Value" : 3600;
+    
+    -> in file yml then change:
+
+         jwt:
+            refresh: 36000
+
+    -> we can see result of yml file then change was hided value "valid-duration" to security
 
     ----------------- or using C2 -----------------
     
@@ -200,14 +207,16 @@ https://www.mongodb.com/try/download/compass
 
          jwt:
             valid-duration: 3600
+            refresh: 36000
     
 
     -> changed yml file to:
 
          jwt:
             valid-duration: ${JWT_VALIDDURATION}
+            refresh: 36000
  
-    -> convert to variable environment by introduction step2 above : type "Name" is : JWT_VALIDDURATION, then type "Value" : 3600;
-    -> result will hide value need to security, 
+    -> convert to variable environment : type "Name" is : JWT_VALIDDURATION same with variable, then type "Value" : 3600;
+    -> we can result of value "valid-duration" in yml file then change, was hided by "${JWT_VALIDDURATION}" to security, 
     -> can see at application.yml with db 
         -> explaint: (${DBMS_PASSWORD:123456} this means, if not define value "Name" and "Value" in step2 -> will get default value after character ":" is 123456)
