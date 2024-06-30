@@ -45,7 +45,27 @@
 #### EDD (Event Driven Design) (Kafka, RabbitMQ)
     ``` Designing a system operator by events, when cause event -> create trigger another microservice
         Include tools:
-        - Kafka : help we transport messages from this microservice to other microservices
+        - Kafka : "Kafka acts as a postman",help we transport messages from this microservice to other microservices.
+            Kafka includes : producer (this mean who sent notification) and consumer (this mean who received notification)
+             + Kafka cluster :  is where responsible for sending notification to consumer
+                + in kafka cluster including "topics", "topic" will navigate when we want to "what is send notification" ?
+                    + example same as a T.V will have multiple channels (VTV1, VTV2, VTV3, etc) each channel will have multiple content another,
+                        when we want to seen "what content" ? we navigate to that channel, and that chanel will contain content we wish seen
+            ** ex kafka in this system : kafka will be intermediate, 
+            + details : when user registeres successfully (in identityservice) -> identityservice will sent message to kafka -> then kafka will send message to Notification service
+                        -> Notification service will receive this message from kafka -> it will send email to user with contain of email can is "Welcome user onboard" .
+            ** instead of, at indentity service -> when register successful -> call api to Notification service and Notification service will send mail -> at here, we will using kafka 
+                **NOTE THAT: by using kafka will help us Reduce the workload of the service -> secure "secret of conccern" of each microservice 
+                    -> this mean, identity service implementation successfully -> it only need public messages to kafka at topic certain that define before,
+                     -> and indentity service don't care any service will handle these messages that indentity service only focus on features registere, and sent messages to kafka
+                        -> and other services that want to take that notifications -> listens in kafka to have action with business by myself 
+                            -> we will using notifications service to listen in kafka -> if kafka have messages "register successfully" 
+                                -> sent mail to user with content is "wellcome user onboard" 
+                            -> in this system -> indetity service is producer and consumer is notification service
+                ** reducing workload in this case is: indetity service after the public to kafka,indetity service will don't care next step or next logic 
+                            -> so, save resources for handle other requests
+                    -> at notification service will receive mutiple notification, and notification can no need to process inmediately 
+                        -> that notification service will have mechanism processing gradually that requests -> it still secure user recives notification and system operation smoothly 
         - RabbitMQ : ...
     ```
 ### ------------------------ Devops ------------------------
@@ -192,7 +212,8 @@ https://www.mongodb.com/try/download/compass
             refresh: 36000
 
     -> value is: jwt.valid-duration -> have value 3600
-    -> convert to variable environment by introduction rules above: type  "Name" is : JWT_VALIDDURATION -> "Name" is valid by rules above, then type "Value" : 3600;
+    -> convert to variable environment by introduction rules above from "jwt.valid-duration" type  "Name" is : JWT_VALIDDURATION 
+        -> "Name" is valid by rules above, then type "Value" : 3600;
     
     -> in file yml then change:
 
@@ -219,4 +240,56 @@ https://www.mongodb.com/try/download/compass
     -> convert to variable environment : type "Name" is : JWT_VALIDDURATION same with variable, then type "Value" : 3600;
     -> we can result of value "valid-duration" in yml file then change, was hided by "${JWT_VALIDDURATION}" to security, 
     -> can see at application.yml with db 
-        -> explaint: (${DBMS_PASSWORD:123456} this means, if not define value "Name" and "Value" in step2 -> will get default value after character ":" is 123456)
+        -> explaint: (${DBMS_PASSWORD:123456} this means, if not define value "Name" and "Value" in step2 
+            -> will get default value after character ":" is 123456)
+
+
+
+### 6. **------------------------ Config Kafka from Docker ------------------------**
+###### NOTE THAT : time before , kafka have service is ZooKeeper help management clusters in system kafka, since version 3.6
+###### Kafka using new system replace for Zookeeper is Kraft metadata system, since version 4.0 kafka remove Zookeeper
+###### we will using version 3.7 -> no need to using Zookeeper of Kafka 
+##### docs: https://kafka.apache.org/blog
+##### 1.At docker-composer.yml file containing information essentially for kafka configuration, can see at this file
+##### 2.At terminal, cd to folder of project and type `docker-compose up -d` ,
+###### this mean -> take information from docker-composer.yml file to install kafka (note that: have to install docker)
+###### this system , we implementation on identity services and notification service
+###### 3.determine services is consumer or producer, after add dependency kafka into pom.xml
+###### 4.ex: add dependency into pom.xml, because using kafka at notification service (consumer) and identity service (producer) (at 2 this service)
+###### 5.can reference config yml file at notification service (consumer) and identity service (producer)
+###### NOTE THAT:
+###### ** --- PROBLEM 1 --- ** 
+###### when side producer publishes messages to "topic1" in Kafka system
+###### if side consumer listeners message from "topic2" -> will not receive messages
+###### because before, producer already pushed message to kafka at "topic1"
+###### -> when change consumer to listeners "topic1" -> will receive messages from "topic1"
+###### so, only need side consumer change to "topic1" -> will receive messages 
+###### -> this mean, no influence or call api again from identity service ->  same according to the queue mechanism
+###### -> in practice, these things, this mean consumer was disconnected to topic in kafka
+###### -> after if consumer connection successful again -> still receive messages latest that no read yet -> this message not duplicate
+###### FLOW KAFKA : SERVICE_1 (PRODUCER) AND SERVICE_2 (CONSUMER) AND "GROUP A" , "TOPIC DIFFERENT BUT SAME GROUP"
+###### AT SERVICE_1 -> PUBLISH MESSAGE TO KAFKA AT "TOPIC1" -> SERVICE_2 LISTENER AT "TOPIC2" AND "GROUP A" -> START SERVER OF SERVICE 1 AND 2
+###### -> SERVICE_2 NOT RECEIVED MESSAGE FROM "TOPIC1" -> THIS MEAN, MESSAGE AT "TOPIC1", SERVICE_2 NOT READ YET 
+    BECAUSE SERVICE_1 PUSH TO "TOPIC1" BUT SERVICE_2 IS READING MESSAGE AT "TOPIC2", SO NOT RECEIVED MESSAGE FROM "TOPIC1"
+###### -> WHEN SERVICE_2 CHANGED TO LISTENER TO "TOPIC1" -> CONTINUE START SERVER OF SERVICE_2 (CONSUMER) AGAIN (*)
+###### -> SERVICE_2 WILL RECEIVED MESSAGE LATEST AND NOT READ YET FROM "TOPIC1"
+###### -> AFTER SERVICE_2 FINISHED READING MESSAGE FROM "TOPIC1" -> WHEN CONTINUE START  SERVER OF SERVICE_2 (CONSUMER) AGAIN
+###### -> SERVICE_2 DIDN'T RECEIVE THE NOTIFICATION
+    BECAUSE SERVICE_2 CONSUMED THIS MESSAGE BEFORE AT STEP (*)
+
+###### ** --- PROBLEM 2 --- ** 
+###### FLOW KAFKA : SERVICE_1 (PRODUCER) AND SERVICE_2 (CONSUMER) AND "GROUP A" AFTER CHANGE TO "GROUP B", "TOPIC SAME BUT DIFFERENT GROUP"
+###### AT SERVICE_1 -> PUBLISH MANY MESSAGES TO KAFKA AT "TOPIC1" 
+###### -> SERVICE_2 LISTENER AT "TOPIC1" WITH "GROUP A" AND ALREADY READ ALL MESSAGES (*)
+###### -> WHEN SERVICE_2 STILL LISTENER FROM "TOPIC1" BUT NOW CHANGE AGAIN TO "GROUP B" 
+###### -> START SERVER OF SERVICE_2 (CONSUMER) AGAIN -> SERVICE_2 RECEIVE ALL MESSAGES FROM "TOPIC1" -> FROM OLDEST TO LATEST (**)
+    ``` SERVICE_2 READ SUCCESSFUL ALL MESSAGE FROM "TOPIC1" BECAUSE SERVICE_2 READ BY "GROUP". 
+        ->BEFORE, SERVICE_2 AT "GROUP A" ALREADY CONSUMED ALL MESSAGES 
+        -> WHEN USING NEW "GROUP B" JOIN INTO , SERVICE_2 WILL REQUEST ALL MESSAGE FROM THE BEGINNING TO THE PRESENT 
+      ```
+###### -> WHEN CONTINUE START SERVER OF SERVICE_2 (CONSUMER) AGAIN -> SERVICE_2 NOT READ 
+    -> BECAUSE SERVICE_2 ALREADY CONSUMED ALL THIS MESSAGES FROM "TOPIC1" WITH "GROUP B" BEFORE AT STEP (**).
+###### -> CONTINUE WHEN WE BACK TO "GROUP A" ->  CONTINUE START SERVER OF SERVICE_2 (CONSUMER) AGAIN -> SERVICE_2 NOT READ 
+    -> BECAUSE CONSUMED MESSAGE IN "GROUP A" AT STEP (*)
+######  -> IF SERVICE_1 -> CREATE MESSAGE -> SERVICE_2 WILL CAN RECEIVE MESSAGE 
+    -> BECAUSE MESSAGE AT "TOPIC1" WITH "GROUP A" NOT CONSUME YET, IT JUST CREARE NEW MESSAGE BY SERVICE_1

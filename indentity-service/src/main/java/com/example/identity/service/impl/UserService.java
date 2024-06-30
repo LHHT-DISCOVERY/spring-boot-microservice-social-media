@@ -20,13 +20,12 @@ import org.codehaus.jettison.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -51,6 +50,10 @@ public class UserService implements IServiceCRUD<User, UserCreateRequest, UserRe
     ProfileClient profileClient;
 
     ProfileMapper profileMapper;
+
+    // target is when create user sent message to Kafka, and notification service take this notification
+    // to public message into kafka using KafkaTemplate, including key and value, Using String as config yml
+    KafkaTemplate<String, String> kafkaTemplate;
 
     @Override
     @PreAuthorize("hasRole('ADMIN')")
@@ -94,6 +97,8 @@ public class UserService implements IServiceCRUD<User, UserCreateRequest, UserRe
         var profileRequest = profileMapper.toProfileCreateRequest(usercreateRequest);
         profileRequest.setUserId(user.getId());
         profileClient.createProfile(profileRequest);
+        // Producer, Publish message to kafka
+        kafkaTemplate.send("onboard-successfully", "Welcome new member " + user.getUsername());
         return userMapper.toUserResponse(user);
     }
 
