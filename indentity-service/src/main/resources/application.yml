@@ -34,6 +34,11 @@ spring:
   config:
     active:
       on-profile: dev # this mean, when Packing the application into a jar that will use this file
+  kafka: # must install kafka with docker, can implement this configuration
+    bootstrap-servers: localhost:9094 # port was be config at docker-compose.yml file, this port same with docker-compose.yml file
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer # this mean sent message is string to notification service
+      refreshable-serializer: org.apache.kafka.common.serialization.StringSerializer
 app:
   service:
     profile: http://localhost:4567/profile

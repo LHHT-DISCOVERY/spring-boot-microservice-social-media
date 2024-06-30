@@ -10,4 +10,11 @@ spring:
     name: notification-service
   data:
     mongodb:
-      uri: mongodb://root:root@localhost:27017/notification-service?authSource=admin
+      uri: mongodb://root:root@localhost:27017/notification-service?authSource=admin #username and password are "root"
+  kafka: # must install kafka with docker, can implement this configuration
+    bootstrap-servers: localhost:9094 # port was be config at docker-compose.yml file, this port same with docker-compose.yml file
+    consumer:
+      group-id: notification-group
+      auto-offset-reset: earliest # is the strategy will reading the oldest message first, same dsa "queue"
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer # this mean sent message is string to notification service
+      refreshable-serializer: org.apache.kafka.common.serialization.StringSerializer
