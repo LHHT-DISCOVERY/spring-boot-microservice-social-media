@@ -1,5 +1,7 @@
 package com.example.identity.service.impl;
 
+import com.example.identity.common.util.KafkaTopicContain;
+import com.example.identity.configuration.converters.UserMessageConverter;
 import com.example.identity.dto.request.UserCreateRequest;
 import com.example.identity.dto.request.UserUpdateRequest;
 import com.example.identity.dto.response.UserResponse;
@@ -29,6 +31,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -53,7 +56,9 @@ public class UserService implements IServiceCRUD<User, UserCreateRequest, UserRe
 
     // target is when create user sent message to Kafka, and notification service take this notification
     // to public message into kafka using KafkaTemplate, including key and value, Using String as config yml
-    KafkaTemplate<String, String> kafkaTemplate;
+    KafkaTemplate<String, Object> kafkaTemplate;
+
+//    KafkaTemplate<String, Object> kafkaTemplate;
 
     @Override
     @PreAuthorize("hasRole('ADMIN')")
@@ -97,8 +102,10 @@ public class UserService implements IServiceCRUD<User, UserCreateRequest, UserRe
         var profileRequest = profileMapper.toProfileCreateRequest(usercreateRequest);
         profileRequest.setUserId(user.getId());
         profileClient.createProfile(profileRequest);
-        // Producer, Publish message to kafka
-        kafkaTemplate.send("onboard-successfully", "Welcome new member " + user.getUsername());
+        // Producer, Publish message to kafka cluster
+//        kafkaTemplate.send(KafkaTopicContain.USER_REGISTER_SUCCESS, "Welcome new member " + user.getUsername()); // producer , send message have datatype is string to kafka
+        kafkaTemplate.send(KafkaTopicContain.USER_REGISTER_SUCCESS, user); // to have data type is 'user', we have object to mapping json to 'user' as below
+        kafkaTemplate.setMessageConverter(new UserMessageConverter());
         return userMapper.toUserResponse(user);
     }
 

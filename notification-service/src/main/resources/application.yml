@@ -4,7 +4,7 @@ server:
     context-path: /notification
 email:
   third-party-uri : https://api.brevo.com
-  apiKeyEmail:
+  apiKeyEmail: ${API_EMAIL_KEY}
 spring:
   application:
     name: notification-service

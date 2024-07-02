@@ -6,7 +6,7 @@ services:
     container_name: kafka
     hostname: kafka
     ports:
-      - '9094:9094' # port exposed is 9094
+      - '9094:9094' # port exposed is 9094, kafka broker
     environment:
       - KAFKA_CFG_NODE_ID=0
       - KAFKA_CFG_PROCESS_ROLES=controller,broker
