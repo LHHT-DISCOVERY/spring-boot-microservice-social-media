@@ -259,7 +259,7 @@ https://www.mongodb.com/try/download/compass
 ###### 5.can reference config yml file at notification service (consumer) and identity service (producer)
 ###### NOTE THAT:
 ##### Kafka Architecture
-![Hình ảnh]([https://flask.palletsprojects.com/en/2.3.x/_images/flask-horizontal.png](https://github.com/LHHT-DISCOVERY/spring-boot-microservice-social-media/blob/main/kafka_architecture/kafka.png)
+![Hình ảnh](https://github.com/LHHT-DISCOVERY/spring-boot-microservice-social-media/blob/main/kafka_architecture/kafka.png)
 ###### ** --- PROBLEM 1 --- ** 
 ###### when side producer publishes messages to "topic1" in Kafka system
 ###### if side consumer listeners message from "topic2" -> will not receive messages
