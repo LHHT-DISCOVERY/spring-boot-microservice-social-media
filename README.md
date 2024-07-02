@@ -293,3 +293,6 @@ https://www.mongodb.com/try/download/compass
     -> BECAUSE CONSUMED MESSAGE IN "GROUP A" AT STEP (*)
 ######  -> IF SERVICE_1 -> CREATE MESSAGE -> SERVICE_2 WILL CAN RECEIVE MESSAGE 
     -> BECAUSE MESSAGE AT "TOPIC1" WITH "GROUP A" NOT CONSUME YET, IT JUST CREARE NEW MESSAGE BY SERVICE_1
+###### when producer sent an object to kafka for message , we using extend from JsonMessageConverter
+    -> JsonMessageConverter help server receive request have datatype is json -> then server auto convert to Object in Java 
+    -> process business with object java (by json sent to server just convert to java) -> and can return again datatype is json for client

@@ -8,7 +8,6 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,13 +24,5 @@ public class EmailController {
         ApiResponse<EmailResponse> apiResponse = new ApiResponse<>();
         apiResponse.setResult(emailService.sendEmail(request));
         return apiResponse;
-    }
-
-    // to declare consumer , using annotation @KafkaListener, param "Topics" and "groupId"
-    //  but was configured in yml -> no need to using param group
-    //  -> need to using group to void that messages sent all instances -> duplicate message -> mistake in process
-    @KafkaListener(topics = "onboard-successfully")
-    public void listen(String message) { // when have message come, map message received into param "String message" in method
-        log.info("message: {}", message);
     }
 }
