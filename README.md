@@ -260,6 +260,20 @@ https://www.mongodb.com/try/download/compass
 ###### NOTE THAT:
 ##### Kafka Architecture
 ![Hình ảnh](https://github.com/LHHT-DISCOVERY/spring-boot-microservice-social-media/blob/main/kafka_architecture/kafka.png)
+##### Kafka Brokers
+![Hình ảnh](https://github.com/LHHT-DISCOVERY/spring-boot-microservice-social-media/blob/main/kafka_architecture/kafka_broker.png)
+##### Kafka Topics
+![Hình ảnh](https://github.com/LHHT-DISCOVERY/spring-boot-microservice-social-media/blob/main/kafka_architecture/kafka_topic.png)
+##### Kafka Partitions
+![Hình ảnh](https://github.com/LHHT-DISCOVERY/spring-boot-microservice-social-media/blob/main/kafka_architecture/kafka_partitions.png)
+##### Kafka Offset
+![Hình ảnh](https://github.com/LHHT-DISCOVERY/spring-boot-microservice-social-media/blob/main/kafka_architecture/kafka_offset.png)
+##### Kafka GroupID
+![Hình ảnh](https://github.com/LHHT-DISCOVERY/spring-boot-microservice-social-media/blob/main/kafka_architecture/kafka_group.png)
+##### Kafka Comsumer
+![Hình ảnh](https://github.com/LHHT-DISCOVERY/spring-boot-microservice-social-media/blob/main/kafka_architecture/kafka_consumer.png)
+
+
 ###### ** --- PROBLEM 1 --- ** 
 ###### when side producer publishes messages to "topic1" in Kafka system
 ###### if side consumer listeners message from "topic2" -> will not receive messages
