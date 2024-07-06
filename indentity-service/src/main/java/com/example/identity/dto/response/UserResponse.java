@@ -9,6 +9,7 @@ import java.util.Set;
 @Builder
 @Setter
 @Getter
+@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
