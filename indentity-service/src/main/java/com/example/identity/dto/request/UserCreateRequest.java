@@ -33,5 +33,7 @@ public class UserCreateRequest {
     String city;
     String gender;
 
+    String email;
+
     List<String> roles;
 }

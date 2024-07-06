@@ -8,6 +8,11 @@ spring:
     authentication:
       username: neo4j
       password: 12345678
+  kafka:
+    bootstrap-servers: localhost:9094
+    producer:
+      key_serializer: org.apache.kafka.common.serialization.StringSerializer
+      value_serializer: org.springframework.kafka.support.serializer.JsonSerializer
 
 
 

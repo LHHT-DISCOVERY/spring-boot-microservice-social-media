@@ -1,5 +1,6 @@
 package com.example.profile.service;
 
+import com.example.profile.apache_kafka.producers.KafkaProducer;
 import com.example.profile.dto.request.UserProfileCreateRequest;
 import com.example.profile.dto.response.UserProfileResponse;
 import com.example.profile.entity.UserProfile;
@@ -24,6 +25,7 @@ import java.util.List;
 public class UserProfileService {
     UserProfileRepository userProfileRepository;
     UserProfileMapper userProfileMapper;
+    KafkaProducer kafkaProducer;
 
     public UserProfileResponse createProfile(UserProfileCreateRequest request) {
         if (userProfileRepository.existsByFirstNameAndLastName(request.getFirstName(), request.getLastName())) {
@@ -31,7 +33,9 @@ public class UserProfileService {
         }
         UserProfile userProfile = userProfileMapper.ToUserProfile(request);
         userProfile = userProfileRepository.save(userProfile);
-        return userProfileMapper.toUserProfileResponse(userProfile);
+        UserProfileResponse userProfileResponse = userProfileMapper.toUserProfileResponse(userProfile);
+        kafkaProducer.sendMessageCreateProfileUserSuccess(userProfileResponse);
+        return userProfileResponse;
     }
 
     public UserProfileResponse getProfile(String id) {
