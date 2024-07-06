@@ -19,4 +19,5 @@ public class UserProfileCreateRequest {
     String gender;
     LocalDate dob;
     String city;
+    String email;
 }

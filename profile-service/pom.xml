@@ -40,6 +40,11 @@
             <version>1.18.20</version>
             <scope>provided</scope>
         </dependency>
+<!--        kafka-->
+        <dependency>
+            <groupId>org.springframework.kafka</groupId>
+            <artifactId>spring-kafka</artifactId>
+        </dependency>
 
         <!-- security for profile (note that , need config security for profile service , if not -> not access api endpoints:  401, not content in body)-->
         <dependency>

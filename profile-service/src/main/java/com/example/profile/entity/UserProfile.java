@@ -30,6 +30,5 @@ public class UserProfile {
     String gender;
     LocalDate dob;
     String city;
-
-
+    String email;
 }
