@@ -1,7 +1,7 @@
 package com.example.identity.service.impl;
 
-import com.example.identity.common.util.KafkaTopicContain;
-import com.example.identity.configuration.converters.UserMessageConverter;
+import com.example.identity.apache_kafka.producers.KafkaJsonProducerUserService;
+import com.example.identity.apache_kafka.producers.KafkaProducerUserService;
 import com.example.identity.dto.request.UserCreateRequest;
 import com.example.identity.dto.request.UserUpdateRequest;
 import com.example.identity.dto.response.UserResponse;
@@ -22,7 +22,6 @@ import org.codehaus.jettison.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -31,7 +30,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -54,11 +52,8 @@ public class UserService implements IServiceCRUD<User, UserCreateRequest, UserRe
 
     ProfileMapper profileMapper;
 
-    // target is when create user sent message to Kafka, and notification service take this notification
-    // to public message into kafka using KafkaTemplate, including key and value, Using String as config yml
-    KafkaTemplate<String, Object> kafkaTemplate;
-
-//    KafkaTemplate<String, Object> kafkaTemplate;
+    KafkaProducerUserService kafkaProducerUserService;
+    KafkaJsonProducerUserService kafkaJsonProducerUserService;
 
     @Override
     @PreAuthorize("hasRole('ADMIN')")
@@ -96,17 +91,17 @@ public class UserService implements IServiceCRUD<User, UserCreateRequest, UserRe
         } catch (DataIntegrityViolationException e) {
             throw new AppException(
                     ErrorCode.USER_EXIST);
-            // instead of check user exist by jpa (existsByUsername() method) as above , we using try catch exception,
+            // instead of check user exist by jpa (existsByUsername() method) as above, we using try catch exception,
             // give  this check task for dbms
         }
         var profileRequest = profileMapper.toProfileCreateRequest(usercreateRequest);
         profileRequest.setUserId(user.getId());
         profileClient.createProfile(profileRequest);
-        // Producer, Publish message to kafka cluster
-//        kafkaTemplate.send(KafkaTopicContain.USER_REGISTER_SUCCESS, "Welcome new member " + user.getUsername()); // producer , send message have datatype is string to kafka
-        kafkaTemplate.send(KafkaTopicContain.USER_REGISTER_SUCCESS, user); // to have data type is 'user', we have object to mapping json to 'user' as below
-        kafkaTemplate.setMessageConverter(new UserMessageConverter());
-        return userMapper.toUserResponse(user);
+        UserResponse userResponse = userMapper.toUserResponse(user);
+        // một "topic" nên sài chúng một kiểu dữ liệu để gửi lên
+        kafkaProducerUserService.sendMessageUserRegisterSuccess("Successfully registered"); // sent message is string
+        kafkaJsonProducerUserService.sendMessageUserRegisterSuccess(userResponse); // sent message is object
+        return userResponse;
     }
 
     @Override

@@ -38,18 +38,25 @@ spring:
     # port was be config at docker-compose.yml file, this port same with docker-compose.yml file
     bootstrap-servers: localhost:9094 # this mean kafka is listening on localhost 9094 of kafka broker
     producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
       # sent message is String can set up by us
-#      key-serializer: org.apache.kafka.common.serialization.StringSerializer # this mean sent message is string to notification service
-#      refreshable-serializer: org.apache.kafka.common.serialization.StringSerializer
+#     value-serializer: org.apache.kafka.common.serialization.StringSerializer
       # or sent message is object we can using config below
-      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer # this means sent data not is String, that sent an object
-      # properties is when want to sent to each other, is have attribute contain data is UserResponse,
-      properties:  # "user:" is name of attribute have data is UserResponse
-        "[spring.json.type.mapping]": user:com.example.identity.dto.response.UserResponse  # when have many attributes, copy properties through below, this case processing : 1 topic will be many type messages , and consumer will consume these massages
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      # this means sent data not is String, that sent an object, else using line 43 to push message is string
+      #  => Note that: set "value-serializer:" is "org.springframework.kafka.support.serializer.JsonSerializer" to push object
     consumer:
       group-id: identity-group
       auto-offset-reset: earliest
-      value-deserializer: org.apache.kafka.common.serialization.ByteArrayDeserializer # then sent data according to "Serializer", we listen "deserializer" to change thành object of java that producer push to kafka broker
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+#      received message is String can set up
+#      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+#      received message is object can set up
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      # if we want to receive an object of java that producer sent to kafka broker
+      #  => need to set "value-deserializer:" is "org.springframework.kafka.support.serializer.JsonDeserializer" to received object , else using line 51 to receives String
+      properties:
+        spring.json.trusted.packages: com.example.identity.dto.response # to receives and map from json message to object at class definition
 
 app:
   service:

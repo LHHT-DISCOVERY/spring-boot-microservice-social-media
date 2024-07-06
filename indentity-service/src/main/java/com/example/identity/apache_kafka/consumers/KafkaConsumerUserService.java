@@ -1,6 +1,8 @@
-package com.example.notification.component;
+package com.example.identity.apache_kafka.consumers;
 
-import com.example.notification.common.utill.KafkaTopicContain;
+
+import com.example.identity.apache_kafka.kafka_topics.KafkaTopicContain;
+import com.example.identity.dto.response.UserResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaHandler;
 import org.springframework.stereotype.Component;
@@ -10,14 +12,13 @@ import org.springframework.stereotype.Component;
 // to declare consumer , using annotation @KafkaListener, param "Topics" and "groupId"
 //  but was configured in yml -> no need to using param group
 //  -> need to using group to void that messages sent all instances -> duplicate message -> mistake in process
-@org.springframework.kafka.annotation.KafkaListener(topics = {KafkaTopicContain.IDENTITY_USER_REGISTER_SUCCESS})
+@org.springframework.kafka.annotation.KafkaListener(topics = {KafkaTopicContain.DATA_USER_REGISTER_SUCCESS})
 // can have multiple topics para in bracket by ","
-public class KafkaListener {
+public class KafkaConsumerUserService {
 
     @KafkaHandler
-    public String listenUserRegisterFromIdentityServer(String message) { // when have message come, map message received into param "String message" in method
-        log.info("Received message from identity-service: {}", message);
-        return message;
+    public void listenUserRegisterFromIdentityServer(UserResponse userResponse) { // when have message come, map message received into param "UserResponse userResponse" in method
+        log.info("Received message at server identity with username of object: {}", userResponse.toString());
     }
 
 
