@@ -36,7 +36,7 @@ public class ListenerFromProfile {
         SendEmailRequest request = SendEmailRequest.builder()
                 .to(List.of(new EmailFormat(userProfile.getLastName(), userProfile.getEmail())))
                 .subject("HELLO " + genderUser + userProfile.getLastName() + " - WELCOME TO ONBOARD ")
-                .htmlContent("<h1 style=\"width: 60%; margin: auto; margin-top: 20px; border: 1px solid #indigo;\">Hello " + genderUser + userProfile.getFirstName() + " " +  userProfile.getLastName() + " </h1> </br> " +
+                .htmlContent("<h1 style=\"margin: auto; margin-top: 20px; border: 1px solid #indigo; text-align: center;\">Hello " + genderUser + userProfile.getFirstName() + " " +  userProfile.getLastName() + " </h1> </br> " +
                         "<h3  style=\"color: #dd3f05!important; font-weight: bold; padding: 15px 0; color: #333; text-align: center;\"> CONGRATULATE RECEIVED A COUPON CODE FOR NEW USER : uyw23er&h23  </h3> </br> " +
                         "<h4 style=\"width: 70%; text-align: center;margin:auto\"> Welcome to eSportFlick, the premier social network designed exclusively for gamers. </br> " +
                         "Whether you're a casual player or a hardcore enthusiast. </br> " +
