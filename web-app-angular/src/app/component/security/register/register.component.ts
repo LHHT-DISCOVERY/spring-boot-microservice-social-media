@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
 import { AuthenticateService } from 'src/app/services/authentication/authenticate.service';
 import { userRegister } from 'src/app/model/userRegister';
+import { ModalService } from 'src/app/services/modal-service/modal.service';
 
 @Component({
   selector: 'app-register',
@@ -10,7 +11,9 @@ import { userRegister } from 'src/app/model/userRegister';
 })
 export class RegisterComponent {
   availableRoles: string[] = ['USER', 'ADMIN'];
-  constructor(private authenticate: AuthenticateService) { }
+  constructor(private authenticate: AuthenticateService,
+              public modal: ModalService ,
+  ) { }
 
   ngOnInit(): void {
   }
@@ -107,6 +110,7 @@ export class RegisterComponent {
     this.authenticate.signup(requestData).subscribe(
       (data) => {
         console.log("Đăng ký thành công", data);
+        this.modal.toggleModal('auth')
       },
       (error) => {
         console.log("Đăng ký thất bại: " + JSON.stringify(error));

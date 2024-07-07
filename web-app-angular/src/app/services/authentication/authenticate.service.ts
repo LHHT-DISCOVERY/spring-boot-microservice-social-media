@@ -9,7 +9,8 @@ const IDENTITY = "http://localhost:8888/api/identity/"
   providedIn: 'root'
 })
 export class AuthenticateService {
-  httpOption: any
+  httpOption: any;
+  isLoggedIn :boolean = false
 
 
   constructor(private http: HttpClient) { 
