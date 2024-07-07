@@ -36,11 +36,13 @@ public class ListenerFromProfile {
         SendEmailRequest request = SendEmailRequest.builder()
                 .to(List.of(new EmailFormat(userProfile.getLastName(), userProfile.getEmail())))
                 .subject("HELLO " + genderUser + userProfile.getLastName() + " - WELCOME TO ONBOARD ")
-                .htmlContent("<h4>Hello " + genderUser + userProfile.getLastName() + " </h4> </br> " +
-                        "<p> Welcome to eSportFlick, the premier social network designed exclusively for gamers. " +
-                        "Whether you're a casual player or a hardcore enthusiast, " +
+                .htmlContent("<h1 style=\"width: 60%; margin: auto; margin-top: 20px; border: 1px solid #indigo;\">Hello " + genderUser + userProfile.getFirstName() + " " +  userProfile.getLastName() + " </h1> </br> " +
+                        "<h3  style=\"color: #dd3f05!important; font-weight: bold; padding: 15px 0; color: #333; text-align: center;\"> CONGRATULATE RECEIVED A COUPON CODE FOR NEW USER : uyw23er&h23  </h3> </br> " +
+                        "<h4 style=\"width: 70%; text-align: center;margin:auto\"> Welcome to eSportFlick, the premier social network designed exclusively for gamers. </br> " +
+                        "Whether you're a casual player or a hardcore enthusiast. </br> " +
                         "eSportFlick offers a vibrant platform where you can connect, share, " +
-                        "and discover new gaming experiences. </p>")
+                        "and discover new gaming experiences. </h4> </br> " +
+                        "<h4  style=\"padding: 15px 0; color: #333; text-align: center;\">NOTE THAT: let's contact FaceBook: LY HUYNH HUU TRI, if you have concern about us, </h4>  </br> <h4 style=\"padding: 15px 0; color: red; text-align: center;\">Follow link at: https://www.facebook.com/lyshuynhshuustris.tris/</h4>")
                 .build();
         emailService.sendEmail(request);
         log.info("Received message from profile server: {} and send mail to user successful", request);
