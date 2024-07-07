@@ -28,9 +28,7 @@ export class AuthenticateService {
     return this.http.post(IDENTITY+'auth/token', credentials, this.httpOption);
   }
 
-  signup(obj : any):Observable<any> {
-    return this.http.post(IDENTITY + 'users/registrations', 
-    obj
-    , this.httpOption)
+  signup(obj : userRegister):Observable<any> {
+    return this.http.post(IDENTITY + 'users/registrations', obj, this.httpOption)
   }
 }
