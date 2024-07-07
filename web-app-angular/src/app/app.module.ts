@@ -5,6 +5,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { UserViewNewsModule } from './component/user-view-news/user-view-news.module';
+import { NavModule } from './component/nav/nav.module';
+import { SecurityModule } from './component/security/security.module';
 @NgModule({
   declarations: [
     AppComponent
@@ -14,6 +16,8 @@ import { UserViewNewsModule } from './component/user-view-news/user-view-news.mo
     BrowserModule,
     AppRoutingModule,
     UserViewNewsModule,
+    // NavModule,
+    // SecurityModule,
     HttpClientModule
   ],
   providers: [],
