@@ -3,6 +3,7 @@ import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
 import { AuthenticateService } from 'src/app/services/authentication/authenticate.service';
 import { userRegister } from 'src/app/model/userRegister';
 import { ModalService } from 'src/app/services/modal-service/modal.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-register',
@@ -13,6 +14,7 @@ export class RegisterComponent {
   availableRoles: string[] = ['USER', 'ADMIN'];
   constructor(private authenticate: AuthenticateService,
               public modal: ModalService ,
+              private toastr: ToastrService
   ) { }
 
   ngOnInit(): void {
@@ -109,11 +111,13 @@ export class RegisterComponent {
   
     this.authenticate.signup(requestData).subscribe(
       (data) => {
+        this.toastr.success( "welcome to onboard, please check information in mail" , "REGISTER SUCCESS")
         console.log("Đăng ký thành công", data);
         this.modal.toggleModal('auth')
       },
       (error) => {
         console.log("Đăng ký thất bại: " + JSON.stringify(error));
+        this.toastr.error( "please check value in form register" , "REGISTER FAILED")
       }
     );
   
