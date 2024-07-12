@@ -6,7 +6,6 @@ import { AuthModalComponent } from './auth-modal/auth-modal.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
 import { ToastrModule } from 'ngx-toastr';
-import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
@@ -20,11 +19,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
   imports: [
     CommonModule,
     SharedModule,
-    ReactiveFormsModule, 
+    ReactiveFormsModule,
     FormsModule ,
     BrowserAnimationsModule,
     ToastrModule.forRoot()
-  ], 
+  ],
   exports: [
     AuthModalComponent,
   ]

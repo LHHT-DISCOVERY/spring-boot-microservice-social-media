@@ -37,7 +37,7 @@ export class NavComponent implements OnInit {
       this.username =  JSON.parse(this.localstorage.getUserFromLocalStorage()).username;
     }
 
-    if(this.localstorage.getTokenFromLocalStorage() != "TOKEN NOT FOUND"){
+    if(this.localstorage.getTokenFromLocalStorage() != "TOKEN NOT FOUND" && this.getUsernameAccount() != "USERNAME NOT FOUND" ){
       this.isLoggedIn = true
       console.log("acasdcasdhcasjdhcasdcadadjhasd đã đăng nhập")
     }

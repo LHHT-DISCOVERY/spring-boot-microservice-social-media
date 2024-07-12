@@ -23,7 +23,7 @@ export class LoginComponent implements OnInit {
     private shareService: ShareServiceService,
     public modal: ModalService ,
     private toastr: ToastrService
-   
+
   ) { }
 
   ngOnInit(): void {
