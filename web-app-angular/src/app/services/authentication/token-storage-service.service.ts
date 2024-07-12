@@ -10,9 +10,10 @@ export class TokenStorageServiceService {
 
   constructor() { }
 
-  public saveTokenToLocalStorage(token : string){
+  public saveTokenAndUserNameToLocalStorage(token : string , username : string){
     window.localStorage.clear();
     window.localStorage.setItem(TOKEN_KEY, token)
+    window.localStorage.setItem(USER_KEY, username)
   }
 
   public getTokenFromLocalStorage(): string {
@@ -20,13 +21,9 @@ export class TokenStorageServiceService {
     return token ?? "TOKEN NOT FOUND"
   }
 
-  public saveUserToLocalStorage(getUsernameAccount: string){
-    window.localStorage.removeItem(USER_KEY)
-    window.localStorage.setItem(USER_KEY, getUsernameAccount)
-  }
-
   public getUserFromLocalStorage():string {
-   const user = localStorage.getItem(USER_KEY) ?? localStorage.getItem(USER_KEY)
-   return user ?? JSON.stringify("USERNAME NOT FOUND")
+   const username = localStorage.getItem(USER_KEY) ?? localStorage.getItem(USER_KEY)
+   console.log("log username in localstorage" , username)
+   return username ?? JSON.stringify("USERNAME NOT FOUND")
   }
 }

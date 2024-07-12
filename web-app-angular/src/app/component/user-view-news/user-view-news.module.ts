@@ -6,7 +6,6 @@ import { UserViewHomeComponent } from './user-view-home/user-view-home.component
 import { SecurityModule } from '../security/security.module';
 
 import { AppRoutingModule } from 'src/app/app-routing.module';
-import { AuthModalComponent } from '../security/auth-modal/auth-modal.component';
 
 
 
@@ -21,6 +20,6 @@ import { AuthModalComponent } from '../security/auth-modal/auth-modal.component'
     AppRoutingModule,
     NavModule
   ],
-  exports:[AuthModalComponent]
+  exports:[]
 })
 export class UserViewNewsModule { }

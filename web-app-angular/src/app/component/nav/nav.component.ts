@@ -14,7 +14,7 @@ export class NavComponent implements OnInit {
 
   isLoggedIn: boolean = false;
   currentUser : string = ''
-  username : string  = ''
+  username : any  = ''
 
   constructor(public modal: ModalService ,
       private localstorage : TokenStorageServiceService,
@@ -42,7 +42,8 @@ export class NavComponent implements OnInit {
       console.log("acasdcasdhcasjdhcasdcadadjhasd đã đăng nhập")
     }
     console.log(this.isLoggedIn)
-    this.getUsernameAccount()
+    this.username = this.getUsernameAccount()
+    console.log("log username at loadHeader" , this.username)
   }
 
   openModal($event: Event) {
@@ -51,10 +52,10 @@ export class NavComponent implements OnInit {
     this.modal.toggleModal('auth')
   }
 
-  public getUsernameAccount() :string{
-    const username = JSON.parse(this.localstorage.getUserFromLocalStorage()).username
-    console.log(username ?? "uknown user" , " ==========================")
-    return username ?? "uknown user"
+  public getUsernameAccount() :any{
+     this.username = this.localstorage.getUserFromLocalStorage().replace(/^"|"$/g, '')
+    console.log(this.username + " ==========================")
+    return this.username ?? "uknown user"
   }
 
 }
