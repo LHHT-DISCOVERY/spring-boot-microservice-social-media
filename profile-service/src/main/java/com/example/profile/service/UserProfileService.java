@@ -1,5 +1,8 @@
 package com.example.profile.service;
 
+import com.example.profile.apache_kafka.producers.Channel;
+import com.example.event.dto.NotificationEvent;
+import com.example.profile.apache_kafka.producers.TemplateEmail;
 import com.example.profile.apache_kafka.producers.KafkaProducer;
 import com.example.profile.dto.request.UserProfileCreateRequest;
 import com.example.profile.dto.response.UserProfileResponse;
@@ -34,7 +37,20 @@ public class UserProfileService {
         UserProfile userProfile = userProfileMapper.ToUserProfile(request);
         userProfile = userProfileRepository.save(userProfile);
         UserProfileResponse userProfileResponse = userProfileMapper.toUserProfileResponse(userProfile);
-        kafkaProducer.sendMessageCreateProfileUserSuccess(userProfileResponse);
+
+        String genderUser = userProfile.getGender().equals("male") ? "Mr. " : "Ms. ";
+        TemplateEmail templateEmail = TemplateEmail.builder()
+                .genderUser(genderUser)
+                .username(request.getLastName())
+                .build();
+        NotificationEvent notificationEvent = NotificationEvent.builder()
+                .channelName(Channel.EMAIL.name())
+                .recipient(request.getEmail())
+                .subject(templateEmail.subjectEmailOnboarding())
+                .body(templateEmail.contentEmailOnboarding())
+                .build();
+
+        kafkaProducer.sendMessageCreateProfileUserSuccess(notificationEvent);
         return userProfileResponse;
     }
 
