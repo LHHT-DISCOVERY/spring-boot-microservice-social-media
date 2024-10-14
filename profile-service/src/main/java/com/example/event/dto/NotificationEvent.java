@@ -2,6 +2,7 @@ package com.example.event.dto;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import org.apache.logging.log4j.util.StringBuilders;
 
 import java.util.Map;
 
@@ -19,5 +20,4 @@ public class NotificationEvent {
     Map<String, Object> param;
     String subject;
     String body;
-
 }
