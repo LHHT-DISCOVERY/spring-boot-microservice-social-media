@@ -1,4 +1,4 @@
-# spring-boot-microservice-social-media..
+# spring-boot-microservice-social-media
 # spring-boot-microservice-social-media...
 # Create by Huu Tri
 
