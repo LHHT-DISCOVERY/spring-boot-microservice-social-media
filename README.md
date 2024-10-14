@@ -1,4 +1,6 @@
-# spring-boot-microservice-social-media.huutri1
+# spring-boot-microservice-social-media..
+# spring-boot-microservice-social-media...
+# Create by Huu Tri
 
 
 ## Microservices đang là kiến trúc được sử dụng rộng rãi nhất hiện nay, repo này thực hiện cách triển khai micoservices với spring boot 3 thông qua việc xây dựng từ đầu dự án mạng xã hội
