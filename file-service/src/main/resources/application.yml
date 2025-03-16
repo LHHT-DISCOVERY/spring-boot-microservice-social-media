@@ -1,0 +1,31 @@
+server:
+  port: 8023
+  servlet:
+    context-path: /file
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/test?useUnicode=true&characterEncoding=utf8&useSSL=false
+    username: root
+    password: ${DBMS_PASSWORD:123456}
+    hikari:
+      data-source-properties:
+        cachePrepStmts: true
+        prepStmtCacheSqlLimit: 2048
+        useServerPrepStmts: true
+  jpa:
+    hibernate:
+      ddl-auto: update
+      use-new-id-generator-mapping: false
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    database: MYSQL
+    show-sql: true
+    properties:
+      hibernate.cache.use_second_level_cache: false
+      hibernate.cache.use_query_cache: false
+      hibernate.generate_statistics: true
+      hibernate.cache.region.factory_class: org.hibernate.cache.ehcache.SingletonEhCacheRegionFactory
+    open-in-view: false
+  config:
+    active:
+      on-profile: dev # this mean, when Packing the application into a jar that will use this file
